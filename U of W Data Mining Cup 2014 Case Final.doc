@@ -1,0 +1,240 @@
+  U of W Data Mining Cup
+Case: Winter 2014
+
+
+Are you a problem solver? Do you have innovative ideas? Are you ready for a challenge? 
+If so, please join Capital One in tackling one of the most fascinating data mining challenges in the financial services industry. 
+
+What is it? 
+
+In this competition, you will use your creativity and problem solving skills to develop an innovative model that mines an individual’s spending patterns to ultimately predict the likelihood to spend at a given merchant. We will ask you to leverage your model to develop an optimal strategy for assigning merchant discounts (i.e. coupons) to customers of our credit card business. 
+
+Predicting consumer transaction behavior is a challenge. Statistician teams from a wide range of industries are tackling it in an attempt to build a competitive advantage as the benefits of accurate predictions can be enormous:
+
+•	For retailers: optimally stocking shelves, increasing foot traffic or building loyalty 
+•	For social media: making recommendations, enhancing popularity 
+•	For banks: motivating customers to use a particular product for making a purchase, building customer engagement and brand loyalty 
+
+Though the benefits are great, this has not been an easy problem to solve - human behavior is inherently hard to predict and a complete, unbiased source of customer transaction data is hard to come by. Additionally, the shear size and complexity of the data (billions of transactions made annually) has historically made it difficult to justify significant investments in this space. Welcome to Big Data.
+
+Fortunately, recent advances in computing have addressed data storage and processing concerns and as a result, several players (retailers, marketers) are racing to extract insights and build a cutting-edge consumer experience. 
+
+Background
+
+Imagine you work for Warrior Bank, a top financial institution in Canada, and your Vice President (VP) has recently called your team into a meeting to discuss emerging businesses opportunities. In particular, your VP is looking to forge a strategic partnership with a top electronics retailer, by developing an analytic tool that can identify current cardholders that are likely to shop at the retailer in the future. Your VP is excited about the potential to sell this analytic product to the merchant as a targeting tool and generate new revenue for the business (the merchant will pay for accurate targeting). You are excited because your firm’s extensive transaction data assets seem to be ideal for building a solution to this problem.
+
+The Case: Card Linked ‘Merchant Coupon’ Opportunity 
+
+Financial institutions have started offering coupons to vendors loaded directly onto consumers’ credit cards. Once the coupon is loaded onto the card, it is automatically applied to a consumer’s next purchase at that merchant. To-date, Consumers have started embracing merchant coupon features on their credit cards because of the value it provides through discounted prices when making purchases. Unfortunately, your company, Warrior Bank, has yet to offer this feature and has recently seen a shift in customer engagement (i.e. card use) to Warrior Bank’s competitors as a result.
+
+Your VP is growing worrisome, though she is not panicking. She knows that Warrior Bank competitors do not fully harness the power statistical methods can provide and suspects that competitor solutions in this space are rudimentary at best. Additionally, a recent project at Warrior Bank showed that an internally developed proof of concept strategy performed on par with existing analytic tools on the market.
+
+Your VP, is excited about this opportunity because not only does she believe Warrior Bank can catch-up to its competitors by offering a comparable feature, she also feels that Warrior Bank can obtain a competitive advantage by leveraging your team’s analytic expertise, to create a targeting tool that provides far more relevant offers to customers than our competitors are able to generate… 
+
+This is how Warrior Bank will win back customers and maximize customer engagement!
+
+In a recent meeting with your VP, you discussed the opportunity, some initial insights, and overall guidance on the strategy. 
+
+Your VP pointed out that in order to build an effective strategy, it is essential that we are able to identify which customers are most likely to spend at a given merchant. She proposes a pilot project with just one merchant – a large national electronics retailer. By creating a tool that can effectively identify which customers are most likely to shop at that merchant, you can form a partnership where you provide your targeting abilities in exchange for discounts for your cardholders.
+
+
+Though the priority for the merchant is targeting new customers (people that have not shopped at the merchant previously), they also have a desire to build loyalty with their current customer base.  
+
+In order to showcase Warrior Bank’s deep understanding of consumer spending our targeting tool needs to consider:
+•	Spending patterns and preferences vary from customer to customer as well as by location, size of household, income level, etc.
+•	Past spend is a great predictor of future spend, but merchants already have this information and identifying prior spenders is not their priority.
+•	It is imperative to ensure that our business partners understand our solution, how it adds value and its limitations
+
+Lastly, your VP explains that financial institutions could have an advantage over merchant marketing as banks like Warrior Bank also have visibility into customer spending at merchant competitors, the industry, related industries, etc.
+
+NOTE: The build data (build_auth.csv) provided represents transactions made by highly active customers.  The validation sample, however, contains transactions made by a sample of Warrior Bank customers with different levels of engagement.
+
+ 
+Problem Scope
+
+Since this is just a pilot program, you will only need to consider one merchant (M216 – a large electronics retailer). Your goal is to use information prior to June 30th, 2011 to predict whether or not customers will spend at merchant M216 in the 3 following months (July 1st, 2011 to September 30th, 2011).
+
+The purpose of your analytic tool is to use this purchase response model to decide whether or not to extend a discount offer to a given customer. Your VP is ultimately interested in total value (bank value plus customer value) generated as a result of your strategy (details provided later in this document).
+
+The build, or training, sample (build_auth.csv) has been stratified by the merchant M216 in order to ensure a high occurrence of customers that spent money there after June 30th, 2011 (oversampled to obtain a 50% event rate). The merchant_metrics.csv file contains the true build sample event rate for merchant M216, which you should use to adjust your predictions. 
+
+The merchant_metrics.csv also contains many additional pieces of information regarding all merchants that may prove useful to your modeling. We have also provided a detailed spreadsheet (data_dictionary.xlsx) containing details about the data.
+
+There is also a customer zip code lookup file (customer_zip.csv) which can be used to incorporate geographical considerations.
+
+Your build sample is at the raw transaction level (one row per transaction), so you will need to collapse it into customer level (one row per acct_id_code) in order to make your prediction (whether or not this customer will make a purchase at merchant ‘M216’ in the 3 months following June 30th, 2011). 
+
+It is up to you to appropriately summarize all necessary information up to account level in order to develop your model. You may also want to merge on additional pieces of information from the merchant_metrics or customer_zip files. You may even want to add additional information from external sources. Your creativity is the only limit.
+
+Once your purchase response model is built, you will choose which customers to extend offers to on the validation, or test, sample (validation_auth.csv). To measure the performance of your decisions, you will use the value matrix from the section below. You can only measure your performance on the build sample since all transactions beyond June 30th, 2011 are suppressed in the validation sample.
+
+Merchant Offer Strategy Details
+
+In order to fully assess the potential benefit of your analytic tool, you will need a valuation framework in order to assess the cost and benefits of extending offers to the right consumers.
+
+Your VP estimates the potential economics of the program with the following assumptions:
+
+•	The average Warrior Bank customer is worth $100 in Account Value (AV) to the bank
+•	A redeeming transaction provides a profit to the offering merchant. In turn, for facilitating the transaction, the merchant provides:
+o	a 10% discount to the customer for the purchased merchandise 
+o	a credit to Warrior Bank for generating more business
+
+The value matrix below describes the costs and benefit functions of the program for Warrior Bank. 
+
+Value Matrix
+ 	Offer	No Offer
+Spend at Merchant	Customer receives 10% discount on the redeeming transaction.
+
+Warrior Bank receives a $5 benefit in Account Value for each redeemed offer. This additional value represents the average benefit Warrior Bank receives through:
+•	A credit from the merchant for helping them acquire a new customer
+•	Some increase in customer engagement with Warrior Bank for existing customers; customer is happy using Warrior Bank products as the customer feels that the Bank understands their needs 
+•	Through word of mouth, Warrior Bank is likely to attract a new customer as the existing customer becomes an advocate of the Bank.
+	Customer receives 0% discount
+
+Warrior Bank suffers a $1 loss in Account Value driven by a loss in engagement due to offers from other issuers
+No Spend at Merchant	Customer receives 0% discount
+
+Warrior Bank suffers a $3 loss in Account Value for each non-redeemed offer as a result of:
+•	Some customers see offers from other card issuers that are more appealing and lower their engagement with the Bank 
+•	There is also a chance that customers will close their accounts and we lose the full account values.
+•	Some customers may see the offer as intruding on their privacy and close their accounts on principle 
+	
+
+
+Example Strategy Value Calculations: 
+
+Assuming each redeeming transaction is $100; (In actuality the amounts will vary) 
+
+Scenario 1:		Customer is given an offer and redeems it
+
+Customer Value	= Sum of Redeeming Transaction Amount x 10%
+			= $100 x 10%
+			= $10
+
+Bank Value		= Change in Account Value
+			= $5
+
+Total Value		= $10 + $5
+			= $15
+
+Scenario 2:		Customer is given an offer and does not redeem it – WORST CASE
+
+Customer Value	= Sum of Redeeming Transaction Amount x 10%
+			= $0 x 10%
+			= $0
+
+Bank Value		= Change in Account Value
+			= -$3
+
+Total Value		= $0 - $3
+			= -$3
+
+Scenario 3:		Customer is not given an offer
+
+Customer Value	= Sum of Redeeming Transaction Amount x 10%
+			= $0 x 10%
+			= $0
+
+Bank Value		= Change in Account Value
+			= -$1
+
+Total Value		= $0 - $1
+			= -$1
+
+
+
+ 
+How to Create Basic Candidate Variables
+
+The intuition and creativity around variable creation and strategy development is a key aspect of the case and a critical component of the judging. Given the fact that the data is provided in its raw form (Transaction Level) some effort will be required to summarize (or aggregate) the data into variables that can be used in models and strategies. You will ultimately need to aggregate the data to customer level in order to make your offer decisions.
+
+In the conversation with your VP you discussed that a customer’s “Past spend” at a merchant is likely the BEST predictor of their “Future Spend” at the merchant.  You learned the variable she was describing measured the number of transactions made at the merchant in the past 12 months.
+
+The variable was created by leveraging the historical transaction data spanning a period of 12 months, from July 1st 2010 to June 30th, 2011.  The data was aggregated in a way which produced the number of records found for each customer-merchant combination:
+
+SQL Example:
+	SELECT Customer ID, Merchant, count(*) as “# of Transactions”
+	FROM <Historical Transaction Data>
+	WHERE Transaction Date is between July 1, 2010 and June 30, 2011
+	GROUP BY Customer ID, Merchant
+
+Of course, you discussed that this example can be extended to summarize spending patterns in a variety of ways - including summarization across:
+-	different time periods
+-	different categories (merchant, industry, online, etc)
+-	different metrics (count, amount, etc)
+
+
+Statistical Package and Methods
+
+You can apply any statistical software package (SAS, SPSS, R, etc) for the modeling portion of the competition. Any statistical method can be used to build your model, such as logistic regression, linear regression, decision trees, SVM, neural network, etc…
+
+In addition, you are told that one requirement for your work is to understand the features that are used to predict the spend patterns (why did you select those variables and why do you think they relate to future spending behaviour?)
+
+Data Access
+
+Data will be made available for download online at http://capitalonecampus.ca/.
+
+ 
+To Submit Results
+
+Each team (with a maximum of four members) needs to submit three files for a qualifying entry: your offer decisions on the validation sample, your code, and your slideshow presentation
+
+1)	The dataset should:
+a)	be in a simple file format (.csv, .dat, .txt, etc...)
+b)	only contain two columns: 
+ACCT_ID_CODE – ID variable from validation sample
+OFFER – A binary indicator for your decision, 0 meaning you do not extend a discount offer for merchant M216 to that customer and 1 meaning you do
+c)	contain all customers from the validation sample
+
+2)	Your code should :
+a)	run in a common statistical language (SAS, R, C, etc...)
+b)	be able to reproduce your results
+
+3)	Your slideshow presentation should: 
+a)	be a business proposal that includes a description of your approach, method and strategy
+b)	be a maximum 15 slides not including appendix
+c)	have at least one slide describing your approach and strategy
+d)	have at least one slide describing the statistical methods used and the steps in the model-building process
+e)	have at least one slide on the interpretation of the statistical, business insights, and long term strategy
+f)	have all non-essential material in an Appendix section at the end of the slideshow
+g)	be compliant with the contest rules
+
+We will ask each team to submit their entry via email to waterloo@capitalone.com by 11:59:59pm, Sunday, March 16th, 2014.
+
+Judging
+
+There are two rounds of judging.
+
+Round One
+
+All entries received by the submission date will be reviewed by a panel of Capital One associates who will select the top five (5) teams as finalists. Decisions will be made based on the following criteria:
+•	Performance of the proposed strategy (total value generated), evaluated on the validation sample using the value matrix provided earlier in this document
+•	Articulation of strategy in slideshow
+•	Evidence of analytical rigor and creativity
+
+The finalists will be invited to the final round of judging. Teams will be notified of Round One judging results by 5:00pm, Monday, March 17th, 2014.
+
+Finals
+
+The five (5) finalist teams will be invited to give a 20-minute presentation on their business strategy proposal to a panel of leaders from Capital One who will be on-campus Tuesday, March 18th, 2014. Presentations will be judged on the following criteria:
+
+•	Clarity and organization of thought
+•	Overall presentation skills
+•	Demonstrated analytical ability
+
+The winning team will be selected by the judging panel based on the overall persuasiveness of the proposal. 
+
+Prizes
+
+The winning team members will be immortalized by having their team name engraved on the coveted Capital One Data Mining Cup, on display in the MC. Also, as an added bonus, if any of their members choose to participate in the Capital One recruiting process, they’ll skip the candidate pre-screening stage. 
+
+Additionally, the top 2 teams will be treated to dinner with Capital One leaders where they can relax and network to their hearts’ content. For other prizes, see the short rules below.
+
+It’s not easy running a credit business. The key is to manage your time and to play into the strengths of your team. The work can be split effectively between team members, but don’t approach each part independently. Analytics and business strategy are inextricably linked, so be sure to cross-pollinate.
+
+Thank you for your interest, and good luck!
+
+
+Short Rules
+No purchase necessary. Contest is open to all students who have reached the age of eighteen (18), who are residents of Canada (excluding Quebec) and who are currently enrolled at the University of Waterloo (U of W).  Register a team of between one and four members by 7:59:59 p.m. on March 5, 2014. Complete the U of W Data Mining Cup Case as a team and submit your entry by 11:59:59 p.m. March 16, 2014 for your chance to win! First place prize is a $25 gift card for each Team member, dinner with Capital One leaders and the honour of having your team’s name engraved on the Capital One Data Mining Cup! First-place prize value is approximately $75 CAD per person. Second- and third-place team members will also each receive a $25 gift card and an invitation to dinner, total value is approximately $75 CAD per member. Fourth- and fifth-place team members receive a $25 gift card. Chances of winning are based on the number and quality of the submissions. Visit [http://capitalonecampus.ca/] to register and for full contest details.
+
